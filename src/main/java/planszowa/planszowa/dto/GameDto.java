@@ -19,4 +19,6 @@ public class GameDto {
     private Integer minPlayers;
 
     private Integer maxPlayers;
+
+    private String yearPublished;
 }

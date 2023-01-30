@@ -12,6 +12,11 @@ public class GameConverter implements Converter<Game, GameDto> {
     public GameDto convert(Game game){
         return GameDto.builder()
                 .name(game.getName())
+                .description(game.getDescription())
+                .image(game.getImage())
+                .maxPlayers(game.getMaxPlayers())
+                .minPlayers(game.getMinPlayers())
+                .thumbnail(game.getThumbnail())
                 .build();
     }
 }
