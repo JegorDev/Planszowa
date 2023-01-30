@@ -13,6 +13,7 @@ import org.xml.sax.SAXException;
 import planszowa.planszowa.dto.GameDto;
 import planszowa.planszowa.models.Game;
 import planszowa.planszowa.models.User;
+import planszowa.planszowa.payload.request.FindGameRequest;
 import planszowa.planszowa.repositories.GameRepository;
 import planszowa.planszowa.repositories.UserRepository;
 import planszowa.planszowa.services.GamesService;
@@ -62,7 +63,7 @@ public class GamesController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public List<GameDto> getAvailableGameFromBgg( ) throws ParserConfigurationException, IOException, SAXException {
-        return gamesService.searchForGamesByApi();
+    public List<GameDto> getAvailableGameFromBgg(@RequestBody FindGameRequest findGameRequest) throws ParserConfigurationException, IOException, SAXException {
+        return gamesService.searchForGamesByApi(findGameRequest);
     }
 }

@@ -2,6 +2,7 @@ package planszowa.planszowa.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -10,6 +11,7 @@ import planszowa.planszowa.converters.GameConverter;
 import planszowa.planszowa.dto.GameDto;
 import planszowa.planszowa.models.Game;
 import planszowa.planszowa.models.User;
+import planszowa.planszowa.payload.request.FindGameRequest;
 import planszowa.planszowa.repositories.GameRepository;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -39,8 +41,8 @@ public class GamesService {
                 .collect(Collectors.toList());
     }
 
-    public List<GameDto> searchForGamesByApi() throws ParserConfigurationException, IOException, SAXException {
-        String url = "https://boardgamegeek.com/xmlapi2/search?query=nemesis&type=boardgame&exact=0";
+    public List<GameDto> searchForGamesByApi(@RequestBody FindGameRequest findGameRequest) throws ParserConfigurationException, IOException, SAXException {
+        String url = "https://boardgamegeek.com/xmlapi2/search?query="+findGameRequest.getGameToSearch().strip()+"&type=boardgame&exact="+findGameRequest.getExact();
 
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
