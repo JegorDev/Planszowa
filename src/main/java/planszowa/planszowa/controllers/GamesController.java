@@ -47,7 +47,6 @@ public class GamesController {
     public List<GameDto> getAllGamesForUser(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByUsername(auth.getName()).get();
-//        List<Game> games = gameRepository.findByUserId(user.getId());
         List<GameDto> games = gamesService.getAllGamesForUser(user);
         return games;
     }
@@ -58,7 +57,14 @@ public class GamesController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByUsername(auth.getName()).get();
         game.setUser(user);
+        game.setFavourite(false);
         gameRepository.save(game);
+    }
+
+    @PutMapping("/favourite/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    public void markGameAsFavourite(@PathVariable Integer id){
+        gamesService.markGameAsFavourite(id);
     }
 
     @GetMapping("/all")

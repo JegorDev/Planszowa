@@ -15,7 +15,7 @@ public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @JsonView
     private String name;
@@ -34,6 +34,9 @@ public class Game {
 
     @JsonView
     private Integer maxPlayers;
+
+    @JsonView
+    private boolean favourite;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

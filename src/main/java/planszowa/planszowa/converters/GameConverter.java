@@ -17,6 +17,8 @@ public class GameConverter implements Converter<Game, GameDto> {
                 .maxPlayers(game.getMaxPlayers())
                 .minPlayers(game.getMinPlayers())
                 .thumbnail(game.getThumbnail())
+                .id(game.getId())
+                .favourite(game.isFavourite())
                 .build();
     }
 }

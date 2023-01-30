@@ -41,6 +41,19 @@ public class GamesService {
                 .collect(Collectors.toList());
     }
 
+    public void markGameAsFavourite(Integer id){
+        List<Game> games = gameRepository.findAll();
+        for (Game game : games){
+            if (game.isFavourite()){
+                game.setFavourite(false);
+                gameRepository.save(game);
+                break;
+            }
+        }
+        Game game = gameRepository.findById(id).get();
+        game.setFavourite(true);
+        gameRepository.save(game);
+    }
     public List<GameDto> searchForGamesByApi(@RequestBody FindGameRequest findGameRequest) throws ParserConfigurationException, IOException, SAXException {
         String url = "https://boardgamegeek.com/xmlapi2/search?query="+findGameRequest.getGameToSearch().strip()+"&type=boardgame&exact="+findGameRequest.getExact();
 

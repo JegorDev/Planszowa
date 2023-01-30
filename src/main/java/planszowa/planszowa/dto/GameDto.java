@@ -8,6 +8,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class GameDto {
+    private Integer id;
+
     private String name;
 
     private String thumbnail;
@@ -21,4 +23,6 @@ public class GameDto {
     private Integer maxPlayers;
 
     private String yearPublished;
+
+    private boolean favourite;
 }
