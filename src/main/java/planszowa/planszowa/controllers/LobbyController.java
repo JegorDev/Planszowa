@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import planszowa.planszowa.dto.LobbyDto;
 import planszowa.planszowa.models.Lobby;
 import planszowa.planszowa.models.User;
 import planszowa.planszowa.repositories.LobbyRepository;
@@ -27,13 +28,13 @@ public class LobbyController {
 
     @GetMapping("/")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public List<Lobby> getAllOpenLobbies(){
+    public List<LobbyDto> getAllOpenLobbies(){
         return lobbyService.getAllLobbies();
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public Lobby createNewLobby(){
+    public LobbyDto createNewLobby(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByUsername(auth.getName()).get();
         return lobbyService.createNewLobby(user);

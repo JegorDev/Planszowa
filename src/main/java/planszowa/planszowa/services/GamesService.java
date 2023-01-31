@@ -35,7 +35,7 @@ public class GamesService {
     private GameConverter gameConverter;
 
     public List<GameDto> getAllGamesForUser(User user){
-        List<GameDto> games =gameRepository.findByUserId(user.getId()).stream().map(gameConverter::convert).collect(Collectors.toList());
+//        List<GameDto> games = gameRepository.findByUserId(user.getId()).stream().map(gameConverter::convert).collect(Collectors.toList());
         return gameRepository.findByUserId(user.getId()).stream()
                 .map(gameConverter::convert)
                 .collect(Collectors.toList());

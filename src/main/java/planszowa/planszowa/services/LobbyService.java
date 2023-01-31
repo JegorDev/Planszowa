@@ -2,12 +2,15 @@ package planszowa.planszowa.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import planszowa.planszowa.converters.LobbyConverter;
+import planszowa.planszowa.dto.LobbyDto;
 import planszowa.planszowa.models.Lobby;
 import planszowa.planszowa.models.User;
 import planszowa.planszowa.repositories.LobbyRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LobbyService {
@@ -15,18 +18,23 @@ public class LobbyService {
     @Autowired
     private LobbyRepository lobbyRepository;
 
-    public List<Lobby> getAllLobbies(){
-        return lobbyRepository.findAll();
+    @Autowired
+    private LobbyConverter lobbyConverter;
+
+    public List<LobbyDto> getAllLobbies(){
+//                List<LobbyDto> games = lobbyRepository.findAll().stream().map(lobbyConverter::convert).collect(Collectors.toList());
+
+        return lobbyRepository.findAll().stream().map(lobbyConverter::convert).collect(Collectors.toList());
     }
 
-    public Lobby createNewLobby(User user){
+    public LobbyDto createNewLobby(User user){
         Lobby lobby = new Lobby();
         lobby.setOwner(user);
         List<User> users = new ArrayList<>();
         users.add(user);
         lobby.setUsersInLobby(users);
         lobbyRepository.save(lobby);
-        return lobby;
+        return lobbyConverter.convert(lobby);
     }
 
     public String deleteLobby(Integer lobbyId, User user){
