@@ -50,14 +50,19 @@ public class LobbyService {
         String message;
         Lobby lobbyToJoin = lobbyRepository.findById(lobbyId).get();
         List<User> usersInLobby = lobbyToJoin.getUsersInLobby();
-        if (!usersInLobby.contains(user)){
-            usersInLobby.add(user);
-            lobbyToJoin.setUsersInLobby(usersInLobby);
-            lobbyRepository.save(lobbyToJoin);
-            message = "Successfully joined lobby "+ lobbyId;
+        if (!lobbyRepository.existsById(lobbyId)){
+            message = "No lobby exists with id "+lobbyId;
         }
         else{
-            message = "You are already in lobby "+ lobbyId;
+            if (!usersInLobby.contains(user)){
+                usersInLobby.add(user);
+                lobbyToJoin.setUsersInLobby(usersInLobby);
+                lobbyRepository.save(lobbyToJoin);
+                message = "Successfully joined lobby "+ lobbyId;
+            }
+            else{
+                message = "You are already in lobby "+ lobbyId;
+            }
         }
         return message;
     }
